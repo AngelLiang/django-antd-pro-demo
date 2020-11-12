@@ -17,6 +17,7 @@ const Model = {
         payload: response,
       }); // Login successfully
 
+      console.log(response)
       if (response.status === 'ok') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
