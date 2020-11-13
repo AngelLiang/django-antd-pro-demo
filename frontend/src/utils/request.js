@@ -26,9 +26,27 @@ const codeMessage = {
  */
 
 const errorHandler = (error) => {
-  const { response } = error;
+  const {response, data} = error;
 
-  if (response && response.status) {
+  if (response.status === 500) {
+    notification.error({
+      message: '温馨提示',
+      description: `服务器发生异常，请重试`,
+    });
+  }
+  else if (response.status === 403 && data instanceof Object && 'none_fields_errors' in data) {
+    console.log("请登录，cookie可能已过期，或还未登录")
+    // notification.error({
+    //   message: '温馨提示',
+    //   description: `身份认证过期，请重新登录！`,
+    // });
+  }
+
+  else if (data && data instanceof Object && 'fields_errors' in data) {
+    throw error;
+  }
+
+  else if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
     notification.error({
