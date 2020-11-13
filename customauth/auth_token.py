@@ -30,43 +30,43 @@ class TokenCreateView(ObtainAuthToken):
         Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
     """
 
-    parser_classes = (FormParser, MultiPartParser)
+    # parser_classes = (FormParser, MultiPartParser)
 
-    @swagger_auto_schema(
-        operation_summary='用户登录，获取帐号的token',
-        operation_description='',
-        # request_body=openapi.Schema(
-        #     type=openapi.TYPE_OBJECT,
-        #     properties={
-        #         'username': openapi.Schema(
-        #             in_=openapi.IN_BODY,
-        #             type=openapi.TYPE_STRING,
-        #             description='用户名'
-        #         ),
-        #         'password': openapi.Schema(
-        #             in_=openapi.IN_BODY,
-        #             type=openapi.TYPE_STRING,
-        #             description='密码'
-        #         ),
-        #     }
-        # )
-        manual_parameters=[
-            openapi.Parameter(
-                name='username',
-                in_=openapi.IN_FORM,
-                type=openapi.TYPE_STRING,
-                required=True,
-                description='用户名',
-            ),
-            openapi.Parameter(
-                name='password',
-                in_=openapi.IN_FORM,
-                type=openapi.TYPE_STRING,
-                required=True,
-                description='密码',
-            ),
-        ],
-    )
+    # @swagger_auto_schema(
+    #     operation_summary='用户登录，获取帐号的token',
+    #     operation_description='',
+    #     # request_body=openapi.Schema(
+    #     #     type=openapi.TYPE_OBJECT,
+    #     #     properties={
+    #     #         'username': openapi.Schema(
+    #     #             in_=openapi.IN_BODY,
+    #     #             type=openapi.TYPE_STRING,
+    #     #             description='用户名'
+    #     #         ),
+    #     #         'password': openapi.Schema(
+    #     #             in_=openapi.IN_BODY,
+    #     #             type=openapi.TYPE_STRING,
+    #     #             description='密码'
+    #     #         ),
+    #     #     }
+    #     # )
+    #     manual_parameters=[
+    #         openapi.Parameter(
+    #             name='username',
+    #             in_=openapi.IN_FORM,
+    #             type=openapi.TYPE_STRING,
+    #             required=True,
+    #             description='用户名',
+    #         ),
+    #         openapi.Parameter(
+    #             name='password',
+    #             in_=openapi.IN_FORM,
+    #             type=openapi.TYPE_STRING,
+    #             required=True,
+    #             description='密码',
+    #         ),
+    #     ],
+    # )
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
             data=request.data, context={'request': request})
@@ -74,10 +74,14 @@ class TokenCreateView(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, _ = Token.objects.get_or_create(user=user)
         return Response({
-            'user_id': user.pk,
+            'userid': user.pk,
             'token': token.key,
             'name': user.get_full_name() or user.username,
             'email': user.email,
+            # 配合前端的权限
+            'status': 'ok',
+            'type': 'account',
+            'currentAuthority': ['admin', ],
         })
 
 
@@ -96,11 +100,11 @@ class TokenDeleteView(APIView):
     def delete(self, request, format=None):
         token = request.auth
         if token is None:
-            content = {'status': 0, 'detail': '没有token'}
+            content = {'status': 'err', 'detail': '没有token'}
             return Response(content)
 
         token.delete()  # 清除token
-        content = {'status': 1, 'detail': '登出成功'}
+        content = {'status': 'ok', 'detail': '登出成功'}
         return Response(content)
 
 
