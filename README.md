@@ -14,4 +14,4 @@
 
     cd frontend
     npm install
-    npm run start: no-mock
+    npm run start:no-mock
