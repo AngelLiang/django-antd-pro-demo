@@ -17,7 +17,7 @@ const Model = {
         payload: response,
       }); // Login successfully
 
-      console.log(response)
+      // console.log(response)
       if (response.status === 'ok') {
         sessionStorage.setItem('token', response.token);
         // console.log(sessionStorage.getItem('token'))  
