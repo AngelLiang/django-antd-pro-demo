@@ -19,6 +19,9 @@ const Model = {
 
       console.log(response)
       if (response.status === 'ok') {
+        sessionStorage.setItem('token', response.token);
+        // console.log(sessionStorage.getItem('token'))  
+
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         message.success('🎉 🎉 🎉  登录成功！');

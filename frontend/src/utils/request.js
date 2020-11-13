@@ -71,4 +71,20 @@ const request = extend({
   // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
+
+// 请求拦截器，每次发送请求之前判断能否取到token
+request.interceptors.request.use(async (url, options) => {  
+  if (sessionStorage.getItem('token')) {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Token ${sessionStorage.getItem('token')}`,
+    };
+    return {
+      url,
+      options: { ...options, headers },
+    };
+  }
+});
+
 export default request;
