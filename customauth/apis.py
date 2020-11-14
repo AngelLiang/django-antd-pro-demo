@@ -1,6 +1,7 @@
 from .serializers import UserModelSerializer
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
@@ -34,7 +35,7 @@ class CurrentUserView(APIView):
 
     def get(self, request, format=None):
         user = request.user
-        if user:
+        if user and not isinstance(user, AnonymousUser):
             content = {
                 'status': 'ok',
                 'id': user.pk,
@@ -44,8 +45,8 @@ class CurrentUserView(APIView):
         else:
             return JsonResponse({
                 'status': 'err',
-                'detail': '没有登录'
-            }, status=status.HTTP_200_OK)
+                'none_fields_errors': '请先登录'
+            }, status=403)
 
 
 current_uesr_view = CurrentUserView.as_view()

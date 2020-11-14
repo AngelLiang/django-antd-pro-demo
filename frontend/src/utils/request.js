@@ -35,11 +35,12 @@ const errorHandler = (error) => {
     });
   }
   else if (response.status === 403 && data instanceof Object && 'none_fields_errors' in data) {
-    console.log("请登录，cookie可能已过期，或还未登录")
-    // notification.error({
-    //   message: '温馨提示',
-    //   description: `身份认证过期，请重新登录！`,
-    // });
+    //console.log("请登录，cookie可能已过期，或还未登录")
+    notification.error({
+      message: '温馨提示',
+      //description: `身份认证过期，请重新登录！`,
+      description: data.none_fields_errors,
+    });
   }
 
   else if (data && data instanceof Object && 'fields_errors' in data) {
