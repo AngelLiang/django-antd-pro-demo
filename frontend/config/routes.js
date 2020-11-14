@@ -51,6 +51,23 @@ export default [
             path: '/list',
             component: './ListTableList',
           },
+
+          {
+            path: '/table',
+            name: 'user',
+            icon: 'user',
+            authority: ['admin'],
+            routes: [
+              {
+                path: '/table/user',
+                name: 'user',
+                icon: 'user',
+                component: './user/table',
+                authority: ['admin'],
+              },
+            ],
+          },
+
           {
             component: './404',
           },
