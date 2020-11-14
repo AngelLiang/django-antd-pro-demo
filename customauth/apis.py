@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 import json
 
 from rest_framework import status
@@ -30,15 +31,8 @@ class UserViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPageNumberPagination
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
-
-    def get_queryset(self):
-        queryset = self.queryset
-        filter_ = self.request.query_params.get('filter', None)
-        if filter_:
-            if isinstance(filter_, str):
-                filter_ = json.loads(filter_)
-            queryset = queryset.filter(**filter_)
-        return queryset
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    search_fields = ('username', 'first_name', 'last_name', 'email')
 
 
 class CurrentUserView(APIView):

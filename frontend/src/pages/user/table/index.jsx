@@ -1,10 +1,13 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import { Button } from 'antd';
+import { useRef, useState } from 'react';
+import { Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { queryUser } from './service';
 
 export default () => {
+  const [paramState, setParamState] = useState({});
+  const actionRef = useRef();
 
   const columns = [
     {
@@ -44,7 +47,15 @@ export default () => {
     return (
       <PageContainer>
         <ProTable 
+          params={paramState}
+          actionRef={actionRef}
           toolBarRender={() => [
+            <Input.Search ey='search' style={{marginRight: 20}} placeholder="搜索用户 " onSearch={value => {
+              setParamState({
+                search: value,
+              });
+              actionRef.current.reload();
+            }} />,
             <Button key='create' type="primary">
               <PlusOutlined /> 新建
             </Button>,
