@@ -5,6 +5,8 @@ from django.contrib.auth.models import AnonymousUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
+from django_filters.rest_framework import DjangoFilterBackend
+import json
 
 from rest_framework import status
 from rest_framework import viewsets
@@ -27,10 +29,28 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserModelSerializer
 
     def list(self, request, *args, **kwargs):
+        page = request.GET.get('current')  # type: str
+        per_page = request.GET.get('pageSize')  # type: str
+        sorter = request.GET.get('sorter')  # type: dict()
+        filter_ = request.GET.get('filter')  # type: dict()
+
+        print((page, per_page, sorter, filter_))
+
         response = super().list(request, *args, **kwargs)
+        total = self.queryset.count()
         return JsonResponse({
+            'total': total,
             'data': response.data
         })
+
+    def get_queryset(self):
+        queryset = self.queryset
+        filter_ = self.request.query_params.get('filter', None)
+        if filter_:
+            if isinstance(filter_, str):
+                filter_ = json.loads(filter_)
+            queryset = queryset.filter(**filter_)
+        return queryset
 
 
 class CurrentUserView(APIView):
