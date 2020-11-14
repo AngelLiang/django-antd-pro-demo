@@ -41,10 +41,11 @@ export default () => {
       <PageContainer>
         <ProTable 
           toolBarRender={() => [
-            <Button type="primary">
+            <Button key='create' type="primary">
               <PlusOutlined /> 新建
             </Button>,
           ]}
+          rowKey='id'
           columns={columns}
           request={(params, sorter, filter) => queryUser({ ...params, sorter, filter })}
         />
