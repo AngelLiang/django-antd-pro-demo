@@ -50,7 +50,7 @@ export default () => {
           params={paramState}
           actionRef={actionRef}
           toolBarRender={() => [
-            <Input.Search ey='search' style={{marginRight: 20}} placeholder="搜索用户 " onSearch={value => {
+            <Input.Search key='search' style={{marginRight: 20}} placeholder="搜索用户 " onSearch={value => {
               setParamState({
                 search: value,
               });
