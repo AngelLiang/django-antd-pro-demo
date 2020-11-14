@@ -16,6 +16,8 @@ from rest_framework.authentication import (
     BasicAuthentication,
     TokenAuthentication,
 )
+from .pagination import CustomPageNumberPagination
+
 User = get_user_model()
 
 
@@ -25,23 +27,9 @@ class UserViewSet(viewsets.ModelViewSet):
     `update` and `destroy` actions.
 
     """
+    pagination_class = CustomPageNumberPagination
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
-
-    def list(self, request, *args, **kwargs):
-        page = request.GET.get('current')  # type: str
-        per_page = request.GET.get('pageSize')  # type: str
-        sorter = request.GET.get('sorter')  # type: dict()
-        filter_ = request.GET.get('filter')  # type: dict()
-
-        print((page, per_page, sorter, filter_))
-
-        response = super().list(request, *args, **kwargs)
-        total = self.queryset.count()
-        return JsonResponse({
-            'total': total,
-            'data': response.data
-        })
 
     def get_queryset(self):
         queryset = self.queryset
