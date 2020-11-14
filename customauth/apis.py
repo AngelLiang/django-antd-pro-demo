@@ -1,33 +1,30 @@
-from .serializers import UserModelSerializer
-from rest_framework import viewsets
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AnonymousUser
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django.http import JsonResponse
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
 import json
 
+from django.http import JsonResponse
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
+
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
 from rest_framework.authentication import (
     SessionAuthentication,
     BasicAuthentication,
     TokenAuthentication,
 )
 from .pagination import CustomPageNumberPagination
+from .serializers import UserModelSerializer
+
 
 User = get_user_model()
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
-
-    """
     pagination_class = CustomPageNumberPagination
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
