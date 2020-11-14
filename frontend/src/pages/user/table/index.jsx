@@ -24,6 +24,10 @@ export default () => {
       dataIndex: 'is_active',
       // valueType: 'boolean',
       search: false,
+      valueEnum: {
+        true: { text: '启用' },
+        false: { text: '禁用' },
+      },
     },
     {
       title: '加入时间',
