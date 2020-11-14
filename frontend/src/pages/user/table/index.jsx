@@ -2,6 +2,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { queryUser } from './service';
 
 export default () => {
 
@@ -24,6 +25,7 @@ export default () => {
             </Button>,
           ]}
           columns={columns}
+          request={(params, sorter, filter) => queryUser({ ...params, sorter, filter })}
         />
     </PageContainer>
     )

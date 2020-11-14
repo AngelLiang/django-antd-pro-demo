@@ -26,6 +26,12 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
 
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        return JsonResponse({
+            'data': response.data
+        })
+
 
 class CurrentUserView(APIView):
 
