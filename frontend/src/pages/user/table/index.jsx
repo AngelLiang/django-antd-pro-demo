@@ -10,11 +10,32 @@ export default () => {
     {
       title: '用户名',
       dataIndex: 'username',
-      tip: '用户名',
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>;
-      },
     },
+    {
+      title: '名字',
+      dataIndex: 'first_name',
+    },
+    {
+      title: '邮箱',
+      dataIndex: 'email',
+    },
+    {
+      title: '启用',
+      dataIndex: 'is_active',
+      // valueType: 'boolean',
+      search: false,
+    },
+    {
+      title: '加入时间',
+      dataIndex: 'date_joined',
+      valueType: 'dateTime',
+      search: false,
+    },
+    // {
+    //   title: '最后登录时间',
+    //   dataIndex: 'last_login',
+    //   valueType: 'dateTime'
+    // },
   ]
     return (
       <PageContainer>
