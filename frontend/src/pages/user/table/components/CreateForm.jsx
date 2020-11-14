@@ -8,7 +8,6 @@ const CreateForm = (props) => {
       destroyOnClose
       title="新建用户"
       visible={modalVisible}
-      width={1200}
       onCancel={() => onCancel()}
       footer={null}
     >
