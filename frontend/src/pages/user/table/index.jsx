@@ -4,10 +4,14 @@ import { useRef, useState } from 'react';
 import { Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { queryUser } from './service';
+import CreateForm from './components/CreateForm';
 
 export default () => {
   const [paramState, setParamState] = useState({});
   const actionRef = useRef();
+  const addFormRef = useRef();
+
+  const [createModalVisible, handleModalVisible] = useState(false);
 
   const columns = [
     {
@@ -56,7 +60,7 @@ export default () => {
               });
               actionRef.current.reload();
             }} />,
-            <Button key='create' type="primary">
+            <Button key='create' type="primary" onClick={() => handleModalVisible(true)}>
               <PlusOutlined /> 新建
             </Button>,
           ]}
@@ -64,6 +68,17 @@ export default () => {
           columns={columns}
           request={(params, sorter, filter) => queryUser({ ...params, sorter, filter })}
         />
+
+      <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
+        <ProTable
+          type="form"
+          formRef={addFormRef}
+          rowKey="id"
+          columns={columns}
+          rowSelection={{}}
+        />
+      </CreateForm>
+
     </PageContainer>
     )
   };
