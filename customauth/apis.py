@@ -10,6 +10,7 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 from rest_framework.authentication import (
@@ -36,6 +37,23 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [
         CustomDjangoModelPermissions
     ]
+
+    # @action(detail=False)
+    # def current_user(self, request):
+    #     """当前登录用户信息"""
+    #     user = request.user
+    #     if user and not isinstance(user, AnonymousUser):
+    #         content = {
+    #             'status': 'ok',
+    #             'id': user.pk,
+    #             'name': user.get_full_name() or user.username,
+    #         }
+    #         return JsonResponse(content)
+    #     else:
+    #         return JsonResponse({
+    #             'status': 'err',
+    #             'none_fields_errors': '请先登录'
+    #         }, status=403)
 
 
 class CurrentUserView(APIView):
