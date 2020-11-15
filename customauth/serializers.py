@@ -40,3 +40,25 @@ class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class UserCreateSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=80)
+    password = serializers.CharField()
+    confirm_password = serializers.CharField()
+
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError('该用户名已经存在')
+        return value
+
+    def validate(self, data):
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError('两次密码不一致')
+        return data
+
+    def create(self, validated_data):
+        user = User(username=validated_data['username'])
+        user.set_password(validated_data['password'])
+        user.save()
+        return user

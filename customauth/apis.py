@@ -20,6 +20,7 @@ from rest_framework.authentication import (
 )
 from .pagination import CustomPageNumberPagination
 from .serializers import UserModelSerializer
+from .serializers import UserCreateSerializer
 from .permissions import CustomDjangoModelPermissions
 
 User = get_user_model()
@@ -40,28 +41,19 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'], name='创建用户')
     def create_user(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        confirm_password = request.data.get('confirm_password')
-
-        if password != confirm_password:
+        serializer = UserCreateSerializer(data=request.data)
+        if not serializer.is_valid():
+            # print(serializer.errors)
+            if 'username' in serializer.errors:
+                return Response({
+                    'status': 'err',
+                    'none_fields_errors': str(serializer.errors['username'][0]),
+                })
             return Response({
                 'status': 'err',
-                'fields_errors': [
-                    'password', '两次密码不一致',
-                ]
+                'none_fields_errors': '创建失败，未知错误',
             })
-
-        qs = self.get_queryset()
-        if qs.filter(username=username).exists():
-            return Response({
-                'status': 'err',
-                'none_fields_errors': '该用户名已经存在'
-            })
-
-        user = User(username=username)
-        user.set_password(password)
-        user.save()
+        user = serializer.save()
         return Response({
             'status': 'ok',
             'id': user.pk,
