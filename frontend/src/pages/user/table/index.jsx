@@ -2,7 +2,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { useRef, useState } from 'react';
 import { notification } from 'antd';
-import { Button, Input, Form } from 'antd';
+import { Button, Input, Form, Descriptions  } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { queryUser, addUser, updateUser } from './service';
 import CreateForm from './components/CreateForm';
@@ -53,6 +53,12 @@ export default () => {
     {
       title: '用户名',
       dataIndex: 'username',
+      renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
+        if (type === 'form') {
+          return <Descriptions.Item label={rest.label}>{updateFormValues.username}</Descriptions.Item>
+        }
+        return defaultRender(_);
+      }
     },
     {
       title: '名字',
@@ -229,8 +235,8 @@ export default () => {
                 actionRef.current.reload();
               }
             })
-
           }}
+          
         />
       </UpdateForm>
 
