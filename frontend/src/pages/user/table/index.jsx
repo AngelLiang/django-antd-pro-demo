@@ -3,14 +3,17 @@ import ProTable from '@ant-design/pro-table';
 import { useRef, useState } from 'react';
 import { notification } from 'antd';
 import { Button, Input, Form } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { queryUser, addUser } from './service';
 import CreateForm from './components/CreateForm';
+import UpdateForm from './components/CreateForm';
+
 
 export default () => {
   const [paramState, setParamState] = useState({});
   const actionRef = useRef();
   const addFormRef = useRef();
+  const updateFormRef = useRef();
 
   const [addForm] = Form.useForm();
   const addFormItemLayout = {
@@ -35,6 +38,10 @@ export default () => {
   };
 
   const [createModalVisible, handleModalVisible] = useState(false);
+  const [updateModalVisible, handleUpdateModalVisible] = useState(false);
+
+  const [updateFormValues, setUpdateFormValues] = useState({});
+
 
   const columns = [
     {
@@ -70,6 +77,19 @@ export default () => {
     //   dataIndex: 'last_login',
     //   valueType: 'dateTime'
     // },
+    {
+      title: '操作',
+      dataIndex: 'option',
+      valueType: 'option',
+      fixed: 'right',
+      width: 100,
+      render: (text, record) => (
+        <EditOutlined title="编辑" className="icon" onClick={async () => {
+          setUpdateFormValues(record);
+          handleUpdateModalVisible(true);
+        }} />
+      ),
+    },
   ]
 
   const createColumns = [
@@ -182,6 +202,27 @@ export default () => {
 
         </Form>
       </CreateForm>
+
+      <UpdateForm onCancel={() => handleUpdateModalVisible(false)} modalVisible={updateModalVisible}>
+        <ProTable
+          formRef={updateFormRef}
+          type="form"
+          form={{
+            initialValues: updateFormValues, 
+            labelCol: {span: 6},
+            labelAlign: 'left',
+          }}
+          rowKey="id"
+          columns={columns}
+          rowSelection={{}}
+          onSubmit={async values => {
+            handleUpdateModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }}
+        />
+      </UpdateForm>
 
     </PageContainer>
     )
