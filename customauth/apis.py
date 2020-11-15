@@ -19,7 +19,7 @@ from rest_framework.authentication import (
 )
 from .pagination import CustomPageNumberPagination
 from .serializers import UserModelSerializer
-
+from .permissions import CustomDjangoModelPermissions
 
 User = get_user_model()
 
@@ -30,6 +30,12 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserModelSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     search_fields = ('username', 'first_name', 'last_name', 'email')
+    authentication_classes = [
+        TokenAuthentication
+    ]
+    permission_classes = [
+        CustomDjangoModelPermissions
+    ]
 
 
 class CurrentUserView(APIView):
