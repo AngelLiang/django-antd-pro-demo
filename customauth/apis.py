@@ -38,6 +38,36 @@ class UserViewSet(viewsets.ModelViewSet):
         CustomDjangoModelPermissions
     ]
 
+    @action(detail=False, methods=['post'], name='创建用户')
+    def create_user(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        confirm_password = request.data.get('confirm_password')
+
+        if password != confirm_password:
+            return Response({
+                'status': 'err',
+                'fields_errors': [
+                    'password', '两次密码不一致',
+                ]
+            })
+
+        qs = self.get_queryset()
+        if qs.filter(username=username).exists():
+            return Response({
+                'status': 'err',
+                'none_fields_errors': '该用户名已经存在'
+            })
+
+        user = User(username=username)
+        user.set_password(password)
+        user.save()
+        return Response({
+            'status': 'ok',
+            'id': user.pk,
+            'name': user.get_full_name() or user.username,
+        })
+
     # @action(detail=False)
     # def current_user(self, request):
     #     """当前登录用户信息"""

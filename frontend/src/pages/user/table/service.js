@@ -5,3 +5,9 @@ export async function queryUser(params) {
     params,
   });
 }
+export async function addUser(params) {
+  return request('/api/auth/user/create_user/', {
+    method: 'POST',
+    data: { ...params },
+  });
+}

@@ -1,9 +1,10 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { useRef, useState } from 'react';
+import { notification } from 'antd';
 import { Button, Input, Form } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { queryUser } from './service';
+import { queryUser, addUser } from './service';
 import CreateForm from './components/CreateForm';
 
 export default () => {
@@ -103,6 +104,18 @@ export default () => {
           form={addForm}
           onFinish={values => {
             console.log('Received values of form: ', values);
+            addUser(values).then(response=>{
+              // console.log(response);
+              if (response.status==='ok') {
+                handleModalVisible(false);
+                actionRef.current.reload();
+              } else if(response.status==='err') {
+                notification.error({
+                  message: '温馨提示',
+                  description: response.none_fields_errors,
+                });
+              }
+            })
           }}
           >
             <Form.Item
