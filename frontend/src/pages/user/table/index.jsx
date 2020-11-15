@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { notification } from 'antd';
 import { Button, Input, Form } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
-import { queryUser, addUser } from './service';
+import { queryUser, addUser, updateUser } from './service';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/CreateForm';
 
@@ -44,6 +44,12 @@ export default () => {
 
 
   const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      hideInForm: true,
+      hideInSearch: true,
+    },
     {
       title: '用户名',
       dataIndex: 'username',
@@ -216,10 +222,14 @@ export default () => {
           columns={columns}
           rowSelection={{}}
           onSubmit={async values => {
-            handleUpdateModalVisible(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
+            updateUser(updateFormValues.id, values).then(response=>{
+              console.log(response)
+              handleUpdateModalVisible(false);
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            })
+
           }}
         />
       </UpdateForm>

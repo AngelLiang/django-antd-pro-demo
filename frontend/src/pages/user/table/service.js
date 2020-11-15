@@ -11,3 +11,9 @@ export async function addUser(params) {
     data: { ...params },
   });
 }
+export async function updateUser(id, params) {
+  return request(`/api/auth/user/${id}/`, {
+    method: 'PATCH',
+    data: { ...params, },
+  });
+}
