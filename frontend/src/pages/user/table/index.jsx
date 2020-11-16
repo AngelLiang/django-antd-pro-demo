@@ -7,7 +7,7 @@ import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { queryUser, addUser, updateUser } from './service';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/CreateForm';
-
+import moment from 'moment';
 
 export default () => {
   const [paramState, setParamState] = useState({});
@@ -83,6 +83,12 @@ export default () => {
       dataIndex: 'date_joined',
       valueType: 'dateTime',
       search: false,
+      renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
+        if (type === 'form') {
+          return <Descriptions.Item label={rest.label}>{moment(updateFormValues.date_joined).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
+        }
+        return defaultRender(_);
+      }
     },
     // {
     //   title: '最后登录时间',
