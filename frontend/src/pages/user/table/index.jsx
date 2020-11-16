@@ -107,7 +107,7 @@ export default () => {
       search: false,
       renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
         if (type === 'form') {
-          return <Descriptions.Item label={rest.label}>{moment(updateFormValues.date_joined).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
+          return <Descriptions.Item label={rest.label}>{moment(form.getFieldValue('date_joined')).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
         }
         return defaultRender(_);
       },
@@ -120,7 +120,7 @@ export default () => {
       hideInTable: true,
       renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
         if (type === 'form') {
-          return <Descriptions.Item label={rest.label}>{moment(updateFormValues.last_login).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
+          return <Descriptions.Item label={rest.label}>{moment(form.getFieldValue('last_login')).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
         }
         return defaultRender(_);
       },
