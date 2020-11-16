@@ -70,7 +70,7 @@ export default () => {
       dataIndex: 'username',
       renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
         if (type === 'form') {
-          return <Descriptions.Item label={rest.label}>{updateFormValues.username}</Descriptions.Item>
+          return <Descriptions.Item label={rest.label}>{form.getFieldValue('username')}</Descriptions.Item>
         }
         return defaultRender(_);
       }
@@ -305,7 +305,8 @@ export default () => {
           type="form"
           form={{
             initialValues: updateFormValues, 
-            labelCol: {span: 6},
+            labelCol: {span: 5},
+            wrapperCol: {span: 15},
             labelAlign: 'left',
           }}
           rowKey="id"
