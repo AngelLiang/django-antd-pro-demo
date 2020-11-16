@@ -39,7 +39,7 @@ export const dealManyToManyField = (item, value, onChange, type, ManyToManyList)
                         onChange(targetKeys.filter(el => !moveKeys.includes(el)));
                     }
                 }}
-                render={item => item.ty_options_display_txt}
+                render={item => item.name}
                 oneWay={false}
                 pagination
             />
