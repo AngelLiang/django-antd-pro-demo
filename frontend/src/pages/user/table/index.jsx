@@ -78,6 +78,18 @@ export default () => {
         false: { text: '禁用' },
       },
     },
+    
+    {
+      title: '超级管理员',
+      dataIndex: 'is_superuser',
+      // valueType: 'boolean',
+      search: false,
+      hideInTable: true,
+      valueEnum: {
+        true: { text: '是' },
+        false: { text: '否' },
+      },
+    },
     {
       title: '加入时间',
       dataIndex: 'date_joined',
