@@ -17,3 +17,9 @@ export async function updateUser(id, params) {
     data: { ...params, },
   });
 }
+
+export async function queryGroup(params) {
+  return request('/api/auth/group/', {
+    params,
+  });
+}

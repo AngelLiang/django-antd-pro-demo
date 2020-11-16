@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { notification, message } from 'antd';
 import { Button, Input, Form, Descriptions, Switch  } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
@@ -9,6 +9,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm from './components/CreateForm';
 import moment from 'moment';
 import { dealManyToManyField } from '@/utils/formField'; 
+import { queryGroup } from './service';
 
 export default () => {
   const [paramState, setParamState] = useState({});
@@ -44,11 +45,12 @@ export default () => {
   const [updateFormValues, setUpdateFormValues] = useState({});
 
   const [groupsManyToManyList, setGroupsManyToManyList] = useState([]);
-  // useEffect(() => {
-  //   queryGroup({all:1}).then(value => {
-  //     setGroupsManyToManyList(value);
-  //   });
-  // }, []);
+  useEffect(() => {
+    queryGroup().then(response => {
+      console.log(response)
+      setGroupsManyToManyList(response.data);
+    });
+  }, []);
 
   const columns = [
     {
