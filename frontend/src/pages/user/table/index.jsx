@@ -1,7 +1,7 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { useRef, useState } from 'react';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 import { Button, Input, Form, Descriptions, Switch  } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { queryUser, addUser, updateUser } from './service';
@@ -282,6 +282,7 @@ export default () => {
             updateUser(updateFormValues.id, values).then(response=>{
               console.log(response)
               handleUpdateModalVisible(false);
+              message.success('修改成功');
               if (actionRef.current) {
                 actionRef.current.reload();
               }
