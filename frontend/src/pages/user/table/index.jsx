@@ -17,7 +17,6 @@ export default () => {
   const addFormRef = useRef();
   const updateFormRef = useRef();
 
-  const [addForm] = Form.useForm();
   const addFormItemLayout = {
     labelCol: {
       span: 5,
