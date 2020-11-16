@@ -6,7 +6,7 @@ import { Button, Input, Form, Descriptions, Switch  } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { queryUser, addUser, updateUser } from './service';
 import CreateForm from './components/CreateForm';
-import UpdateForm from './components/CreateForm';
+import UpdateForm from './components/UpdateForm';
 import moment from 'moment';
 import { dealManyToManyField } from '@/utils/formField'; 
 import { queryGroup, queryPermission } from './service';
