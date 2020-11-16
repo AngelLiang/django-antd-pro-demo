@@ -2,7 +2,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { useRef, useState } from 'react';
 import { notification } from 'antd';
-import { Button, Input, Form, Descriptions  } from 'antd';
+import { Button, Input, Form, Descriptions, Switch  } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { queryUser, addUser, updateUser } from './service';
 import CreateForm from './components/CreateForm';
@@ -71,23 +71,33 @@ export default () => {
     {
       title: '启用',
       dataIndex: 'is_active',
-      // valueType: 'boolean',
+      initialValue: true,
       search: false,
-      valueEnum: {
-        true: { text: '启用' },
-        false: { text: '禁用' },
+      renderFormItem: (_, {type, defaultRender, ...rest}, form) => {
+        const value = form.getFieldValue('is_active');
+        if (type === "form" && !value) {
+          form.setFieldsValue({'is_active': false});
+        }
+        return <Switch checked={value} onClick={(checked) => {
+          form.setFieldsValue({'is_active': checked});
+        }} />;
       },
     },
     
     {
       title: '超级管理员',
       dataIndex: 'is_superuser',
-      // valueType: 'boolean',
+      initialValue: false,
       search: false,
       hideInTable: true,
-      valueEnum: {
-        true: { text: '是' },
-        false: { text: '否' },
+      renderFormItem: (_, {type, defaultRender, ...rest}, form) => {
+        const value = form.getFieldValue('is_superuser');
+        if (type === "form" && !value) {
+          form.setFieldsValue({'is_superuser': false});
+        }
+        return <Switch checked={value} onClick={(checked) => {
+          form.setFieldsValue({'is_superuser': checked});
+        }} />;
       },
     },
     {
