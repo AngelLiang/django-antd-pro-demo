@@ -9,7 +9,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm from './components/CreateForm';
 import moment from 'moment';
 import { dealManyToManyField } from '@/utils/formField'; 
-import { queryGroup } from './service';
+import { queryGroup, queryPermission } from './service';
 
 export default () => {
   const [paramState, setParamState] = useState({});
@@ -49,6 +49,12 @@ export default () => {
     queryGroup().then(response => {
       console.log(response)
       setGroupsManyToManyList(response.data);
+    });
+  }, []);
+  const [user_permissionsManyToManyList, setUser_permissionsManyToManyList] = useState([]);
+  useEffect(() => {
+    queryPermission().then(response => {
+      setUser_permissionsManyToManyList(response.data);
     });
   }, []);
 
@@ -161,7 +167,18 @@ export default () => {
         return renderManyToMany(text)
       }
     },
-
+    {
+      title: '用户权限',
+      dataIndex: 'user_permissions',
+      search: false,
+      hideInTable: true,
+      renderFormItem: (item, {value, onChange, type, defaultRender}) => {
+        return dealManyToManyField(item, value,onChange,type, user_permissionsManyToManyList)
+      },
+      render: (text, record) => {
+          return renderManyToMany(text)
+      },
+    },
     {
       title: '操作',
       dataIndex: 'option',

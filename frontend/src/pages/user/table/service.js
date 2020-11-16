@@ -23,3 +23,9 @@ export async function queryGroup(params) {
     params,
   });
 }
+
+export async function queryPermission(params) {
+  return request('/api/auth/permission/', {
+    params,
+  });
+}
