@@ -217,7 +217,7 @@ export default () => {
 
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
         <Form
-          form={addForm}
+          formRef={addFormRef}
           onFinish={values => {
             console.log('Received values of form: ', values);
             addUser(values).then(response=>{
