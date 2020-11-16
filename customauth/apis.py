@@ -28,9 +28,8 @@ from .permissions import CustomDjangoModelPermissions
 User = get_user_model()
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class BaseViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPageNumberPagination
-    serializer_class = GroupModelSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     authentication_classes = [
         TokenAuthentication
@@ -38,21 +37,17 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [
         CustomDjangoModelPermissions
     ]
+
+
+class GroupViewSet(BaseViewSet):
     queryset = Group.objects.all()
+    serializer_class = GroupModelSerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    pagination_class = CustomPageNumberPagination
+class UserViewSet(BaseViewSet):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter)
     search_fields = ('username', 'first_name', 'last_name', 'email')
-    authentication_classes = [
-        TokenAuthentication
-    ]
-    permission_classes = [
-        CustomDjangoModelPermissions
-    ]
 
     @action(detail=False, methods=['post'], name='创建用户')
     def create_user(self, request):
