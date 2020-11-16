@@ -8,6 +8,7 @@ import { queryUser, addUser, updateUser } from './service';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/CreateForm';
 import moment from 'moment';
+import { dealManyToManyField } from '@/utils/formField'; 
 
 export default () => {
   const [paramState, setParamState] = useState({});
@@ -42,6 +43,12 @@ export default () => {
 
   const [updateFormValues, setUpdateFormValues] = useState({});
 
+  const [groupsManyToManyList, setGroupsManyToManyList] = useState([]);
+  // useEffect(() => {
+  //   queryGroup({all:1}).then(value => {
+  //     setGroupsManyToManyList(value);
+  //   });
+  // }, []);
 
   const columns = [
     {
@@ -140,6 +147,19 @@ export default () => {
         return defaultRender(_);
       },
     },
+    {
+      title: '组',
+      dataIndex: 'groups',
+      search: false,
+      hideInTable: true,
+      renderFormItem: (item, {value, onChange, type, defaultRender}) => {
+        return dealManyToManyField(item, value, onChange,type, groupsManyToManyList)
+      },
+      render: (text, record) => {
+        return renderManyToMany(text)
+      }
+    },
+
     {
       title: '操作',
       dataIndex: 'option',
