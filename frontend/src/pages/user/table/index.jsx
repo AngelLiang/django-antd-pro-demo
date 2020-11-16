@@ -194,12 +194,6 @@ export default () => {
     },
   ]
 
-  const createColumns = [
-    {
-      title: '用户名',
-      dataIndex: 'username',
-    },
-  ]
     return (
       <PageContainer>
         <ProTable 
