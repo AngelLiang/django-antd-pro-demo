@@ -83,7 +83,22 @@ export default () => {
         }} />;
       },
     },
-    
+    {
+      title: '人员状态',
+      dataIndex: 'is_staff',
+      initialValue: false,
+      hideInTable: true,
+      search: false,
+      renderFormItem: (_, {type, defaultRender, ...rest}, form) => {
+        const value = form.getFieldValue('is_staff');
+        if (type === "form" && !value) {
+          form.setFieldsValue({'is_staff': false});
+        }
+        return <Switch checked={value} onClick={(checked) => {
+          form.setFieldsValue({'is_staff': checked});
+        }} />;
+      },
+    },
     {
       title: '超级管理员',
       dataIndex: 'is_superuser',
