@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from .auth_token import TokenCreateView, TokenDeleteView
 from .apis import UserViewSet, CurrentUserView
-from .apis import GroupViewSet
+from .apis import GroupViewSet, PermissionViewSet
 
 urlpatterns = [
     path('login/', TokenCreateView.as_view()),
@@ -14,4 +14,5 @@ urlpatterns = [
 router = DefaultRouter()
 router.register(r'user', UserViewSet)
 router.register(r'group', GroupViewSet)
+router.register(r'permission', PermissionViewSet)
 urlpatterns += router.urls

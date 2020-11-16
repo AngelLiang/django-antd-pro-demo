@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
@@ -23,6 +23,7 @@ from .pagination import CustomPageNumberPagination
 from .serializers import UserModelSerializer
 from .serializers import UserCreateSerializer
 from .serializers import GroupModelSerializer
+from .serializers import PermissionModelSerializer
 from .permissions import CustomDjangoModelPermissions
 
 User = get_user_model()
@@ -42,6 +43,11 @@ class BaseViewSet(viewsets.ModelViewSet):
 class GroupViewSet(BaseViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupModelSerializer
+
+
+class PermissionViewSet(BaseViewSet):
+    queryset = Permission.objects.all()
+    serializer_class = PermissionModelSerializer
 
 
 class UserViewSet(BaseViewSet):
