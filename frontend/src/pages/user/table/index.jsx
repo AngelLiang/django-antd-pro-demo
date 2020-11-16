@@ -88,13 +88,21 @@ export default () => {
           return <Descriptions.Item label={rest.label}>{moment(updateFormValues.date_joined).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
         }
         return defaultRender(_);
-      }
+      },
     },
-    // {
-    //   title: '最后登录时间',
-    //   dataIndex: 'last_login',
-    //   valueType: 'dateTime'
-    // },
+    {
+      title: '登录时间',
+      dataIndex: 'last_login',
+      valueType: 'dateTime',
+      search: false,
+      hideInTable: true,
+      renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
+        if (type === 'form') {
+          return <Descriptions.Item label={rest.label}>{moment(updateFormValues.last_login).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
+        }
+        return defaultRender(_);
+      },
+    },
     {
       title: '操作',
       dataIndex: 'option',
