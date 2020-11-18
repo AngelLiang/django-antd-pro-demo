@@ -5,6 +5,7 @@ import {
 
 export const dealManyToManyField = (item, value, onChange, type, ManyToManyList) => {
     const children = ManyToManyList.map(item => {
+        // console.log(item)
         return (
             <Select key={item.id} value={item.id}>
                 {item.name}

@@ -46,15 +46,14 @@ export default () => {
 
   const [groupsManyToManyList, setGroupsManyToManyList] = useState([]);
   useEffect(() => {
-    queryGroup().then(response => {
-      console.log(response)
-      setGroupsManyToManyList(response.data);
+    queryGroup({'all':1}).then(response => {
+      setGroupsManyToManyList(response);
     });
   }, []);
   const [user_permissionsManyToManyList, setUser_permissionsManyToManyList] = useState([]);
   useEffect(() => {
-    queryPermission().then(response => {
-      setUser_permissionsManyToManyList(response.data);
+    queryPermission({'all':1}).then(response => {
+      setUser_permissionsManyToManyList(response);
     });
   }, []);
 

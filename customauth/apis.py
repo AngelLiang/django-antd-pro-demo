@@ -39,6 +39,11 @@ class BaseViewSet(viewsets.ModelViewSet):
         CustomDjangoModelPermissions
     ]
 
+    def list(self, request, *args, **kwargs):
+        if 'all' in request.query_params and len(request.query_params.keys()) == 1:
+            self.pagination_class = None
+        return super().list(request, args, kwargs)
+
 
 class GroupViewSet(BaseViewSet):
     queryset = Group.objects.all()
