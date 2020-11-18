@@ -51,5 +51,6 @@ export default {
   'menu.editor.koni': '拓扑编辑器',
 
   'menu.user': '用户管理',
-  'menu.user.user': '用户',
+  'menu.user.user': '帐号',
+  'menu.user.permission': '权限',
 };

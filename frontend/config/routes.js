@@ -65,6 +65,13 @@ export default [
                 component: './user/table',
                 authority: ['admin'],
               },
+              {
+                path: '/table/permission',
+                name: 'permission',
+                icon: 'permission',
+                component: './permission',
+                authority: ['admin'],
+              },
             ],
           },
 
