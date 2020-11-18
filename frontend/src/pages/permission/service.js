@@ -5,3 +5,10 @@ export async function queryPermission(params) {
     params,
   });
 }
+
+export async function updatePermission(id, params) {
+  return request(`/api/auth/permission/${id}/`, {
+    method: 'PATCH',
+    data: { ...params, },
+  });
+}
