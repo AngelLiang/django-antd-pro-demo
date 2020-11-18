@@ -9,7 +9,8 @@ import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import moment from 'moment';
 import { dealManyToManyField } from '@/utils/formField'; 
-import { queryGroup, queryPermission } from './service';
+import { queryPermission } from '@/pages/permission/service';
+import { queryGroup } from './service';
 
 export default () => {
   const [paramState, setParamState] = useState({});
