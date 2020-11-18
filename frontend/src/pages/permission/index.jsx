@@ -26,14 +26,14 @@ export default () => {
       dataIndex: 'name',
     },
     {
-        title: '权限编码',
-        dataIndex: 'codename',
-        renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
-            if (type === 'form') {
-                return <Descriptions.Item label={rest.label}>{form.getFieldValue('codename')}</Descriptions.Item>
-            }
-            return defaultRender(_);
+      title: '权限编码',
+      dataIndex: 'codename',
+      renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
+        if (type === 'form') {
+            return <Descriptions.Item label={rest.label}>{form.getFieldValue('codename')}</Descriptions.Item>
         }
+        return defaultRender(_);
+      }
     },
     {
       title: '操作',
@@ -53,17 +53,17 @@ export default () => {
     return (
     <PageContainer>
         <ProTable 
-            params={paramState}
-            actionRef={actionRef}
-            toolBarRender={() => [
-            <Input.Search key='search' style={{marginRight: 20}} placeholder="搜索权限" onSearch={value => {
-                setParamState({search: value});
-                actionRef.current.reload();
-            }} />,
-            ]}
-            rowKey='id'
-            columns={columns}
-            request={(params, sorter, filter) => queryPermission({ ...params, sorter, filter })}
+          params={paramState}
+          actionRef={actionRef}
+          toolBarRender={() => [
+          <Input.Search key='search' style={{marginRight: 20}} placeholder="搜索权限" onSearch={value => {
+              setParamState({search: value});
+              actionRef.current.reload();
+          }} />,
+          ]}
+          rowKey='id'
+          columns={columns}
+          request={(params, sorter, filter) => queryPermission({ ...params, sorter, filter })}
         />
 
         <UpdateForm onCancel={() => handleUpdateModalVisible(false)} modalVisible={updateModalVisible}>
