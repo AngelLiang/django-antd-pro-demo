@@ -72,6 +72,13 @@ export default [
                 component: './permission',
                 authority: ['admin'],
               },
+              {
+                path: '/table/group',
+                name: 'group',
+                icon: 'group',
+                component: './group',
+                authority: ['admin'],
+              },
             ],
           },
 
