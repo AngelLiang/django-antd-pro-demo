@@ -59,7 +59,7 @@ const Login = (props) => {
           handleSubmit(values);
         }}
       >
-        <Tabs activeKey={type} onChange={setType}>
+        {/* <Tabs activeKey={type} onChange={setType}>
           <Tabs.TabPane
             key="account"
             tab={intl.formatMessage({
@@ -74,7 +74,7 @@ const Login = (props) => {
               defaultMessage: '手机号登录',
             })}
           />
-        </Tabs>
+        </Tabs> */}
 
         {status === 'error' && loginType === 'account' && !submitting && (
           <LoginMessage
@@ -229,16 +229,16 @@ const Login = (props) => {
               float: 'right',
             }}
           >
-            <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
+            {/* <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" /> */}
           </a>
         </div>
       </ProForm>
-      <Space className={styles.other}>
+      {/* <Space className={styles.other}>
         <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式" />
         <AlipayCircleOutlined className={styles.icon} />
         <TaobaoCircleOutlined className={styles.icon} />
         <WeiboCircleOutlined className={styles.icon} />
-      </Space>
+      </Space> */}
     </div>
   );
 };
