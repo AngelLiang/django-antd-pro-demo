@@ -18,12 +18,6 @@ export async function updateUser(id, params) {
   });
 }
 
-export async function queryGroup(params) {
-  return request('/api/auth/group/', {
-    params,
-  });
-}
-
 export async function setUserPassword(id, params) {
   return request(`/api/auth/user/${id}/set_password/`, {
    method: 'POST',

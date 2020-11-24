@@ -10,7 +10,7 @@ import UpdateForm from './components/UpdateForm';
 import moment from 'moment';
 import { dealManyToManyField, renderManyToMany } from '@/utils/formField'; 
 import { queryPermission } from '@/pages/permission/service';
-import { queryGroup } from './service';
+import { queryGroup } from '@/pages/group/service';
 import SetPasswordForm from './components/SetPasswordForm';
 import KeyOutlined from '@ant-design/icons/lib/icons/KeyOutlined';
 
