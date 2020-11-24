@@ -2,15 +2,17 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { useRef, useState, useEffect } from 'react';
 import { notification, message } from 'antd';
-import { Button, Input, Form, Descriptions, Switch, Transfer  } from 'antd';
+import { Button, Input, Form, Descriptions, Switch, Transfer, Divider } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
-import { queryUser, addUser, updateUser } from './service';
+import { queryUser, addUser, updateUser, setUserPassword } from './service';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import moment from 'moment';
 import { dealManyToManyField, renderManyToMany } from '@/utils/formField'; 
 import { queryPermission } from '@/pages/permission/service';
 import { queryGroup } from './service';
+import SetPasswordForm from './components/SetPasswordForm';
+import KeyOutlined from '@ant-design/icons/lib/icons/KeyOutlined';
 
 export default () => {
   const [paramState, setParamState] = useState({});
@@ -59,6 +61,9 @@ export default () => {
     });
   }, []);
   const [userPermissionsTargetList, setUserPermissionsTargetList] = useState([]);
+
+  const [setPassWordModalVisible, handleSetPassWordModalVisible] = useState(false);
+  const [setPasswordForm] = Form.useForm();
 
   const columns = [
     {
@@ -226,10 +231,17 @@ export default () => {
       fixed: 'right',
       width: 100,
       render: (text, record) => (
-        <EditOutlined title="编辑" className="icon" onClick={async () => {
-          setUpdateFormValues(record);
-          handleUpdateModalVisible(true);
-        }} />
+        <div>
+          <EditOutlined title="编辑" className="icon" onClick={async () => {
+            setUpdateFormValues(record);
+            handleUpdateModalVisible(true);
+          }} />
+          <Divider type="vertical" />
+          <KeyOutlined onClick={() => {
+            setUpdateFormValues(record);
+            handleSetPassWordModalVisible(true);
+          }} />
+        </div>
       ),
     },
   ]
@@ -365,6 +377,64 @@ export default () => {
           
         />
       </UpdateForm>
+
+      <SetPasswordForm
+        updateModalVisible={setPassWordModalVisible}
+        onCancel={() => {
+          handleSetPassWordModalVisible(false);
+        }}
+        handleUpdate={() => {
+          if (setPasswordForm.getFieldValue('new_password') !== setPasswordForm.getFieldValue('confirm_new_password')) {
+            setPasswordForm.setFields([{
+              name: 'confirm_new_password',
+              errors: ['两次密码不一致'],
+            }]);
+          } else {
+            setPasswordForm.validateFields().then(
+              values => {
+                setUserPassword(updateFormValues.id, values).then(
+                  message.success('密码修改成功'),
+                  handleSetPassWordModalVisible(false),
+                );
+              },
+            );
+            setPasswordForm.submit;
+          }
+        }}
+        // username={updateFormValues["username"]}
+      >
+        <Form form={setPasswordForm}>
+          <Form.Item
+            labelCol={{span: 5,}}
+            wrapperCol={{span: 15,}}
+            label="新密码"
+            name="new_password"
+            rules={[
+              {
+                required: true,
+                message: '请输入新密码！',
+              },
+            ]}
+          >
+            <Input.Password placeholder="请输入新密码" type="password" />
+          </Form.Item>
+          <Form.Item
+            labelCol={{span: 5,}}
+            wrapperCol={{span: 15,}}
+            label="重复密码"
+            name="confirm_new_password"
+            rules={[
+              {
+                required: true,
+                message: '请输入重复密码',
+              },
+            ]}
+          >
+            <Input.Password placeholder="请再次输入密码" type="password" />
+          </Form.Item>
+
+        </Form>
+      </SetPasswordForm>
 
     </PageContainer>
     )

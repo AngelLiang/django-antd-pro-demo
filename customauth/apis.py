@@ -81,14 +81,14 @@ class UserViewSet(BaseViewSet):
             'name': user.get_full_name() or user.username,
         })
 
-    @action(detail=False, methods=['post'], name='管理员设置密码')
+    @action(detail=True, methods=['post'], name='管理员设置密码')
     def set_password(self, request, pk=None):
         """设置密码"""
         user = self.get_object()
         serializer = UserSetPasswordSerializer(data=request.data)
         if serializer.is_valid():
             user.set_password(serializer.data['new_password'])
-            user.save(update_fileds=('password',))
+            user.save(update_fields=('password',))
             return Response({'status': 'ok'})
         else:
             return Response({'status': 'err', 'none_field_errors': serializer.errors})

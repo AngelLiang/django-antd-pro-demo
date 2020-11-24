@@ -23,3 +23,10 @@ export async function queryGroup(params) {
     params,
   });
 }
+
+export async function setUserPassword(id, params) {
+  return request(`/api/auth/user/${id}/set_password/`, {
+   method: 'POST',
+   data: { ...params},
+});
+}
