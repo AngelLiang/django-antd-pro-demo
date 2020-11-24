@@ -345,8 +345,8 @@ export default () => {
           type="form"
           form={{
             initialValues: updateFormValues, 
-            labelCol: {span: 5},
-            wrapperCol: {span: 15},
+            // labelCol: {span: 5},
+            // wrapperCol: {span: 15},
             labelAlign: 'left',
           }}
           rowKey="id"
