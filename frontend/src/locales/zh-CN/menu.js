@@ -54,4 +54,6 @@ export default {
   'menu.user.user': '帐号',
   'menu.user.permission': '权限',
   'menu.user.group': '权限组',
+
+  'menu.userprofile': '用户详情',
 };

@@ -30,6 +30,13 @@ export default [
             component: './Welcome',
           },
 
+          {
+            path: '/userProfile',
+            name: 'userprofile',
+            icon: 'user',
+            component: './userprofile',
+          },
+
           // {
           //   path: '/admin',
           //   name: 'admin',
@@ -52,6 +59,7 @@ export default [
           //   path: '/list',
           //   component: './ListTableList',
           // },
+  
 
           {
             path: '/table',
