@@ -35,15 +35,8 @@ const errorHandler = (error) => {
       description: `服务器发生异常，请重试`,
     });
   }
-  else if (response.status === 403 && data instanceof Object && 'none_fields_errors' in data) {
+  else if (data instanceof Object && 'detail' in data) {
     //console.log("请登录，cookie可能已过期，或还未登录")
-    notification.error({
-      message: '温馨提示',
-      //description: `身份认证过期，请重新登录！`,
-      description: data.none_fields_errors,
-    });
-  }
-  else if (response.status === 400 && data instanceof Object && 'detail' in data) {
     notification.error({
       message: '温馨提示',
       description: data.detail,

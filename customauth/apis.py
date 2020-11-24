@@ -129,7 +129,7 @@ class CurrentUserView(APIView):
         else:
             return JsonResponse({
                 'status': 'err',
-                'none_fields_errors': '请先登录'
+                'detail': 'token可能已过期，或还未登录'
             }, status=403)
 
 
