@@ -16,7 +16,7 @@ class ContentTypeModelSerializer(serializers.ModelSerializer):
 
 class PermissionModelSerializer(serializers.ModelSerializer):
 
-    content_type = ContentTypeModelSerializer()
+    # content_type = ContentTypeModelSerializer()
 
     class Meta:
         model = Permission
