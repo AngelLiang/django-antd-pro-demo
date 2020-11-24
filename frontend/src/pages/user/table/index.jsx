@@ -65,7 +65,7 @@ export default () => {
       title: 'ID',
       dataIndex: 'id',
       hideInForm: true,
-      hideInSearch: true,
+      search: false,
     },
     {
       title: '用户名',
@@ -120,8 +120,8 @@ export default () => {
       title: '超级管理员',
       dataIndex: 'is_superuser',
       initialValue: false,
-      search: false,
       hideInTable: true,
+      search: false,
       renderFormItem: (_, {type, defaultRender, ...rest}, form) => {
         const value = form.getFieldValue('is_superuser');
         if (type === "form" && !value) {
@@ -148,8 +148,8 @@ export default () => {
       title: '登录时间',
       dataIndex: 'last_login',
       valueType: 'dateTime',
-      search: false,
       hideInTable: true,
+      search: false,
       renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
         if (type === 'form') {
           return <Descriptions.Item label={rest.label}>{moment(form.getFieldValue('last_login')).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
@@ -160,8 +160,8 @@ export default () => {
     {
       title: '组',
       dataIndex: 'groups',
-      search: false,
       hideInTable: true,
+      search: false,
       renderFormItem: (item, {type, defaultRender}, form) => {
         setGroupsTargetList(form.getFieldValue('groups') || [])
         if (type === 'form') {
@@ -191,8 +191,8 @@ export default () => {
     {
       title: '用户权限',
       dataIndex: 'user_permissions',
-      search: false,
       hideInTable: true,
+      search: false,
       renderFormItem: (item, {type, defaultRender}, form) => {
         setUserPermissionsTargetList(form.getFieldValue('user_permissions') || [])
         if (type === 'form') {
