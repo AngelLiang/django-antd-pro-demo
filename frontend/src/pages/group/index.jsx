@@ -2,7 +2,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { notification, message } from 'antd';
 import { useRef, useState, useEffect } from 'react';
-import { Button, Input, Form, Descriptions, Switch  } from 'antd';
+import { Button, Input, Form, Descriptions, Switch, Transfer } from 'antd';
 import { queryGroup, updateGroup, addGroup } from './service';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import CreateForm from './components/CreateForm';
@@ -19,19 +19,20 @@ export default () => {
   const [updateFormValues, setUpdateFormValues] = useState({});
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
 
-  const [permissionsManyToManyList, setUser_permissionsManyToManyList] = useState([]);
+  const [permissionsManyToManyList, setPermissionsManyToManyList] = useState([]);
   useEffect(() => {
-    queryPermission().then(response => {
-      setUser_permissionsManyToManyList(response.data);
+    queryPermission({'all':1}).then(response => {
+      setPermissionsManyToManyList(response);
     });
   }, []);
+  const [permissionsTargetList, setPermissionsTargetList] = useState([]);
 
   const columns = [
     {
       title: 'ID',
       dataIndex: 'id',
       hideInForm: true,
-      hideInSearch: true,
+      search: false,
     },
     {
       title: '名称',
@@ -42,8 +43,28 @@ export default () => {
       dataIndex: 'permissions',
       search: false,
       hideInTable: true,
-      renderFormItem: (item, {value, onChange, type, defaultRender}) => {
-        return dealManyToManyField(item, value,onChange,type, permissionsManyToManyList)
+      renderFormItem: (item, {type, defaultRender}, form) => {
+        setPermissionsTargetList(form.getFieldValue('permissions') || [])
+        if (type === 'form') {
+          // 穿梭框 https://ant.design/components/transfer-cn/
+          return (<Transfer
+                  showSearch
+                  dataSource={permissionsManyToManyList}
+                  targetKeys={permissionsTargetList}
+                  onChange={(targetKeys, direction, moveKeys) => {
+                      console.log(targetKeys, direction, moveKeys);
+                      setPermissionsTargetList(targetKeys)
+                      form.setFieldsValue({'permissions': targetKeys})
+                  }}
+                  rowKey={record => record.id}
+                  render={item => item.name}
+                  oneWay={false}
+                  pagination
+              />
+          );
+        }
+        return defaultRender(item);
+
       },
       render: (text, record) => {
           return renderManyToMany(text)
