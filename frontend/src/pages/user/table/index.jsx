@@ -50,6 +50,8 @@ export default () => {
       setGroupsManyToManyList(response);
     });
   }, []);
+  const [groupsTargetList, setGroupsTargetList] = useState([]);
+
   const [user_permissionsManyToManyList, setUser_permissionsManyToManyList] = useState([]);
   useEffect(() => {
     queryPermission({'all':1}).then(response => {
@@ -160,8 +162,27 @@ export default () => {
       dataIndex: 'groups',
       search: false,
       hideInTable: true,
-      renderFormItem: (item, {value, onChange, type, defaultRender}) => {
-        return dealManyToManyField(item, value, onChange, type, groupsManyToManyList)
+      renderFormItem: (item, {type, defaultRender}, form) => {
+        setGroupsTargetList(form.getFieldValue('groups') || [])
+        if (type === 'form') {
+          // 穿梭框 https://ant.design/components/transfer-cn/
+          return (<Transfer
+                  showSearch
+                  dataSource={groupsManyToManyList}
+                  targetKeys={groupsTargetList}
+                  onChange={(targetKeys, direction, moveKeys) => {
+                      console.log(targetKeys, direction, moveKeys);
+                      setGroupsTargetList(targetKeys)
+                      form.setFieldsValue({'groups': targetKeys})
+                  }}
+                  rowKey={record => record.id}
+                  render={item => item.name}
+                  oneWay={false}
+                  pagination
+              />
+          );
+        }
+        return defaultRender(item);
       },
       render: (text, record) => {
         return renderManyToMany(text)
@@ -173,7 +194,6 @@ export default () => {
       search: false,
       hideInTable: true,
       renderFormItem: (item, {type, defaultRender}, form) => {
-        // return dealManyToManyField(item, value, onChange, type, user_permissionsManyToManyList)
         setUserPermissionsTargetList(form.getFieldValue('user_permissions') || [])
         if (type === 'form') {
           // 穿梭框 https://ant.design/components/transfer-cn/

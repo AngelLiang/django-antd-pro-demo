@@ -25,7 +25,7 @@ class PermissionModelSerializer(serializers.ModelSerializer):
 
 class GroupModelSerializer(serializers.ModelSerializer):
 
-    permissions = PermissionModelSerializer(many=True)
+    # permissions = PermissionModelSerializer(many=True)
 
     class Meta:
         model = Group
