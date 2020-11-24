@@ -160,7 +160,7 @@ export default () => {
       search: false,
       hideInTable: true,
       renderFormItem: (item, {value, onChange, type, defaultRender}) => {
-        return dealManyToManyField(item, value, onChange,type, groupsManyToManyList)
+        return dealManyToManyField(item, value, onChange, type, groupsManyToManyList)
       },
       render: (text, record) => {
         return renderManyToMany(text)
@@ -172,7 +172,7 @@ export default () => {
       search: false,
       hideInTable: true,
       renderFormItem: (item, {value, onChange, type, defaultRender}) => {
-        return dealManyToManyField(item, value,onChange,type, user_permissionsManyToManyList)
+        return dealManyToManyField(item, value, onChange, type, user_permissionsManyToManyList)
       },
       render: (text, record) => {
           return renderManyToMany(text)

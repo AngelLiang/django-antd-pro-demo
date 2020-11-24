@@ -28,6 +28,7 @@ export const dealManyToManyField = (item, value, onChange, type, ManyToManyList)
     }
     // console.log(value);
     if (type === 'form') {
+        // 穿梭框 https://ant.design/components/transfer-cn/
         return (<Transfer
                 showSearch
                 dataSource={ManyToManyList}
@@ -40,6 +41,7 @@ export const dealManyToManyField = (item, value, onChange, type, ManyToManyList)
                         onChange(targetKeys.filter(el => !moveKeys.includes(el)));
                     }
                 }}
+                rowKey={record => record.id}
                 render={item => item.name}
                 oneWay={false}
                 pagination
