@@ -21,6 +21,7 @@ from rest_framework.authentication import (
 )
 from .pagination import CustomPageNumberPagination
 from .serializers import UserModelSerializer, UserCreateSerializer
+from .serializers import UserSetPasswordSerializer, UserChangePasswordSerializer
 from .serializers import GroupModelSerializer
 from .serializers import PermissionModelSerializer
 from .permissions import CustomDjangoModelPermissions
@@ -79,6 +80,18 @@ class UserViewSet(BaseViewSet):
             'id': user.pk,
             'name': user.get_full_name() or user.username,
         })
+
+    @action(detail=False, methods=['post'], name='管理员设置密码')
+    def set_password(self, request, pk=None):
+        """设置密码"""
+        user = self.get_object()
+        serializer = UserSetPasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.data['new_password'])
+            user.save(update_fileds=('password',))
+            return Response({'status': 'ok'})
+        else:
+            return Response({'status': 'err', 'none_field_errors': serializer.errors})
 
     # @action(detail=False)
     # def current_user(self, request):
