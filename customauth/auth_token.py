@@ -68,9 +68,12 @@ class TokenCreateView(ObtainAuthToken):
     #     ],
     # )
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        if not serializer.is_valid(raise_exception=False):
+            return Response(
+                {'status': 'err', 'detail': '帐号或密码错误'},
+                status=400
+            )
         user = serializer.validated_data['user']
         token, _ = Token.objects.get_or_create(user=user)
         return Response({

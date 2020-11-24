@@ -27,6 +27,7 @@ const codeMessage = {
 
 const errorHandler = (error) => {
   const {response, data} = error;
+  console.log(data)
 
   if (response.status === 500) {
     notification.error({
@@ -40,6 +41,12 @@ const errorHandler = (error) => {
       message: '温馨提示',
       //description: `身份认证过期，请重新登录！`,
       description: data.none_fields_errors,
+    });
+  }
+  else if (response.status === 400 && data instanceof Object && 'detail' in data) {
+    notification.error({
+      message: '温馨提示',
+      description: data.detail,
     });
   }
 
