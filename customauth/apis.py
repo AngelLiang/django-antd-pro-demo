@@ -20,8 +20,7 @@ from rest_framework.authentication import (
     TokenAuthentication,
 )
 from .pagination import CustomPageNumberPagination
-from .serializers import UserModelSerializer
-from .serializers import UserCreateSerializer
+from .serializers import UserModelSerializer, UserCreateSerializer
 from .serializers import GroupModelSerializer
 from .serializers import PermissionModelSerializer
 from .permissions import CustomDjangoModelPermissions

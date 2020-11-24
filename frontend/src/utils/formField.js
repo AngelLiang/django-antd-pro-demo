@@ -33,14 +33,14 @@ export const dealManyToManyField = (item, value, onChange, type, ManyToManyList)
                 showSearch
                 dataSource={ManyToManyList}
                 targetKeys={value}
-                onChange={(targetKeys, direction, moveKeys) => {
-                    console.log(targetKeys, direction, moveKeys);
-                    if (direction === 'right') {
-                        onChange([...targetKeys, ...moveKeys]);
-                    } else {
-                        onChange(targetKeys.filter(el => !moveKeys.includes(el)));
-                    }
-                }}
+                // onChange={(targetKeys, direction, moveKeys) => {
+                //     console.log(targetKeys, direction, moveKeys);
+                //     if (direction === 'right') {
+                //         // onChange([...targetKeys, ...moveKeys]);
+                //     } else {
+                //         // onChange(targetKeys.filter(el => !moveKeys.includes(el)));
+                //     }
+                // }}
                 rowKey={record => record.id}
                 render={item => item.name}
                 oneWay={false}

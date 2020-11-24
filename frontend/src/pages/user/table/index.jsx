@@ -2,7 +2,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { useRef, useState, useEffect } from 'react';
 import { notification, message } from 'antd';
-import { Button, Input, Form, Descriptions, Switch  } from 'antd';
+import { Button, Input, Form, Descriptions, Switch, Transfer  } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { queryUser, addUser, updateUser } from './service';
 import CreateForm from './components/CreateForm';
@@ -56,6 +56,7 @@ export default () => {
       setUser_permissionsManyToManyList(response);
     });
   }, []);
+  const [userPermissionsTargetList, setUserPermissionsTargetList] = useState([]);
 
   const columns = [
     {
@@ -171,8 +172,28 @@ export default () => {
       dataIndex: 'user_permissions',
       search: false,
       hideInTable: true,
-      renderFormItem: (item, {value, onChange, type, defaultRender}) => {
-        return dealManyToManyField(item, value, onChange, type, user_permissionsManyToManyList)
+      renderFormItem: (item, {type, defaultRender}, form) => {
+        // return dealManyToManyField(item, value, onChange, type, user_permissionsManyToManyList)
+        setUserPermissionsTargetList(form.getFieldValue('user_permissions') || [])
+        if (type === 'form') {
+          // 穿梭框 https://ant.design/components/transfer-cn/
+          return (<Transfer
+                  showSearch
+                  dataSource={user_permissionsManyToManyList}
+                  targetKeys={userPermissionsTargetList}
+                  onChange={(targetKeys, direction, moveKeys) => {
+                      console.log(targetKeys, direction, moveKeys);
+                      setUserPermissionsTargetList(targetKeys)
+                      form.setFieldsValue({'user_permissions': targetKeys})
+                  }}
+                  rowKey={record => record.id}
+                  render={item => item.name}
+                  oneWay={false}
+                  pagination
+              />
+          );
+        }
+        return defaultRender(item);
       },
       render: (text, record) => {
           return renderManyToMany(text)
