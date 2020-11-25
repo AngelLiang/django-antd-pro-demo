@@ -4,6 +4,7 @@ import { connect, FormattedMessage } from 'umi';
 import { Menu } from 'antd';
 import styles from './style.less';
 import BaseView from './components/base';
+import SecurityView from './components/security';
 
 const { Item } = Menu;
 
@@ -16,12 +17,9 @@ class UserProfile extends Component {
       base: (
         <FormattedMessage id="accountandsettings.menuMap.basic" defaultMessage="个人信息" />
       ),
-      // security: (
-      //   <FormattedMessage
-      //     id="accountandsettings.menuMap.security"
-      //     defaultMessage="Security Settings"
-      //   />
-      // ),
+      security: (
+        <FormattedMessage id="accountandsettings.menuMap.security" defaultMessage="安全设置" />
+      ),
       // binding: (
       //   <FormattedMessage
       //     id="accountandsettings.menuMap.binding"
@@ -87,6 +85,10 @@ class UserProfile extends Component {
     const { menuMap } = this.state;
     return Object.keys(menuMap).map((item) => <Item key={item}>{menuMap[item]}</Item>);
   };
+  getRightTitle = () => {
+    const { selectKey, menuMap } = this.state;
+    return menuMap[selectKey];
+  };
   selectKey = (key) => {
     this.setState({
       selectKey: key,
@@ -100,8 +102,8 @@ class UserProfile extends Component {
       case 'base':
         return <BaseView />;
 
-      // case 'security':
-      //   return <SecurityView />;
+      case 'security':
+        return <SecurityView />;
 
       // case 'binding':
       //   return <BindingView />;
@@ -137,7 +139,8 @@ class UserProfile extends Component {
             </Menu>
           </div>
           <div className={styles.right}>
-            <BaseView></BaseView>
+            <div className={styles.title}>{this.getRightTitle()}</div>
+              {this.renderChildren()}
           </div>
         </div>
       </GridContent>
