@@ -87,6 +87,7 @@ class BaseView extends Component {
 
   render() {
     const { currentUser } = this.props;
+    console.log(currentUser)
     return (
       <div className={styles.baseView} ref={this.getViewDom}>
         <div className={styles.left}>
@@ -107,21 +108,19 @@ class BaseView extends Component {
             </Form.Item>
 
             <Form.Item
-              name="name"
+              name="first_name"
               label={formatMessage({
                 id: 'userprofile.basic.firstname',
               })}
-              rules={[
-                {
-                  required: true,
-                  message: formatMessage(
-                    {
-                      id: 'userprofile.basic.firstname-message',
-                    },
-                    {},
-                  ),
-                },
-              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              name="last_name"
+              label={formatMessage({
+                id: 'userprofile.basic.lastname',
+              })}
             >
               <Input />
             </Form.Item>
@@ -131,38 +130,26 @@ class BaseView extends Component {
               label={formatMessage({
                 id: 'userprofile.basic.email',
               })}
-              rules={[
-                {
-                  required: true,
-                  message: formatMessage(
-                    {
-                      id: 'userprofile.basic.email-message',
-                    },
-                    {},
-                  ),
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: formatMessage(
+              //       {
+              //         id: 'userprofile.basic.email-message',
+              //       },
+              //       {},
+              //     ),
+              //   },
+              // ]}
             >
               <Input />
             </Form.Item>
-
 
             <Form.Item
               name="profile"
               label={formatMessage({
                 id: 'userprofile.basic.profile',
               })}
-              rules={[
-                {
-                  required: true,
-                  message: formatMessage(
-                    {
-                      id: 'userprofile.basic.profile-message',
-                    },
-                    {},
-                  ),
-                },
-              ]}
             >
               <Input.TextArea
                 placeholder={formatMessage({
