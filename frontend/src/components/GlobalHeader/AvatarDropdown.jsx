@@ -19,6 +19,16 @@ class AvatarDropdown extends React.Component {
       }
 
       return;
+
+    } else if (key === 'userprofile') {
+        const { dispatch } = this.props;
+        if (dispatch) {
+          dispatch({
+            type: 'userProfile',
+          });
+        }
+        history.push(`/${key}`);
+        return;
     }
 
     history.push(`/account/${key}`);
@@ -47,6 +57,11 @@ class AvatarDropdown extends React.Component {
           </Menu.Item>
         )}
         {menu && <Menu.Divider />}
+
+        <Menu.Item key="userprofile">
+          <UserOutlined />
+          用户详情
+        </Menu.Item>
 
         <Menu.Item key="logout">
           <LogoutOutlined />

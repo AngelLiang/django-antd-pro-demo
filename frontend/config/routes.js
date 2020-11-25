@@ -35,6 +35,7 @@ export default [
             name: 'userprofile',
             icon: 'user',
             component: './userprofile',
+            hideInMenu: true,
           },
 
           // {
