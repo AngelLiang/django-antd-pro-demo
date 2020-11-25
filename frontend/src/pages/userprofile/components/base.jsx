@@ -95,11 +95,12 @@ class BaseView extends Component {
 
             <Form.Item
                 name="username"
+                disabled
                 label={formatMessage({
                   id: 'userprofile.basic.username',
                 })}
               >
-                <Input />
+                <Input disabled/>
               </Form.Item>
 
             <Form.Item
