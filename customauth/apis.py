@@ -122,8 +122,7 @@ class CurrentUserView(APIView):
         if user and not isinstance(user, AnonymousUser):
             content = {
                 'status': 'ok',
-                'id': user.pk,
-                'name': user.get_full_name() or user.username,
+                'data': UserModelSerializer(user).data,
             }
             return JsonResponse(content)
         else:

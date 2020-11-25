@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission, Group
 from django.contrib.auth import get_user_model
-
+from django.utils import timezone
 from rest_framework import serializers
 
 User = get_user_model()
@@ -34,12 +34,22 @@ class GroupModelSerializer(serializers.ModelSerializer):
 
 class UserModelSerializer(serializers.ModelSerializer):
 
+    display_name = serializers.SerializerMethodField()
+    days_since_joined = serializers.SerializerMethodField()
+
     # groups = GroupModelSerializer(many=True)
     # user_permissions = PermissionModelSerializer(many=True)
 
     class Meta:
         model = User
         exclude = ('password',)
+
+    def get_display_name(self, obj):
+        return obj.get_full_name() or obj.username
+
+    def get_days_since_joined(self, obj):
+        """加入天数"""
+        return (timezone.now() - obj.date_joined).days
 
 
 class UserCreateSerializer(serializers.Serializer):

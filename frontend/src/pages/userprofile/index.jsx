@@ -35,8 +35,8 @@ class UserProfile extends Component {
 }
 
 
-export default connect(({userProfile}) => ({
-  currentUser: userProfile.currentUser,
+export default connect(({user}) => ({
+  currentUser: user.currentUser,
 }))(UserProfile);
 
 

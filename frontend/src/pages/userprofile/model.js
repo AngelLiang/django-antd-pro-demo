@@ -14,7 +14,7 @@ const Model = {
       const response = yield call(queryCurrentUser);
       yield put({
         type: 'saveCurrentUser',
-        payload: response,
+        payload: response.data,
       });
     },
 
