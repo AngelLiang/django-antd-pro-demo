@@ -43,6 +43,7 @@ class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         exclude = ('password',)
+        read_only_fields = ('username', 'date_joined', 'last_login')
 
     def get_display_name(self, obj):
         return obj.get_full_name() or obj.username

@@ -1,4 +1,4 @@
-import { queryCurrentUser } from './service';
+import { queryCurrentUser, updateCurrentUser } from './service';
 
 // https://dvajs.com/guide/getting-started.html#%E5%AE%9A%E4%B9%89-model
 const Model = {
@@ -12,6 +12,14 @@ const Model = {
   effects: {
     *fetchCurrentUser(_, { call, put }) {
       const response = yield call(queryCurrentUser);
+      yield put({
+        type: 'saveCurrentUser',
+        payload: response.data,
+      });
+    },
+
+    *updateCurrentUser({ payload }, { call, put }) {
+      const response = yield call(updateCurrentUser, payload);
       yield put({
         type: 'saveCurrentUser',
         payload: response.data,

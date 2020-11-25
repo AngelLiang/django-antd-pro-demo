@@ -6,17 +6,17 @@ import BaseView from './components/base';
 
 class UserProfile extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
-  componentDidMount() {
-    this.props.dispatch({
-      type: 'userProfile/fetchCurrentUser',
-    });
-    // window.addEventListener('resize', this.resize);
-    // this.resize();
-  }
+  // componentDidMount() {
+  //   this.props.dispatch({
+  //     type: 'userProfile/fetchCurrentUser',
+  //   });
+  //   // window.addEventListener('resize', this.resize);
+  //   // this.resize();
+  // }
 
   render() {
     console.log(this.props)
@@ -35,7 +35,7 @@ class UserProfile extends Component {
 }
 
 
-export default connect(({user}) => ({
+export default connect(({ user }) => ({
   currentUser: user.currentUser,
 }))(UserProfile);
 

@@ -1,9 +1,11 @@
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Input, Select, Upload, Form, message } from 'antd';
+import { message } from 'antd';
+import { Button, Input, Select, Upload, Form, Descriptions } from 'antd';
 import { connect, FormattedMessage, formatMessage } from 'umi';
 import React, { Component } from 'react';
 import PhoneView from './PhoneView';
 import styles from './BaseView.less';
+
 const { Option } = Select; // 头像组件 方便以后独立，增加裁剪之类的功能
 
 const AvatarView = ({ avatar }) => (
@@ -77,7 +79,12 @@ class BaseView extends Component {
   getViewDom = (ref) => {
     this.view = ref;
   };
-  handleFinish = () => {
+  handleFinish = (values) => {
+    console.log(values)
+    this.props.dispatch({
+      type: 'userProfile/updateCurrentUser',
+      payload: values,
+    })
     message.success(
       formatMessage({
         id: 'userprofile.basic.update.success',
@@ -98,14 +105,14 @@ class BaseView extends Component {
             hideRequiredMark
           >
 
-          <Form.Item
-              name="username"
-              label={formatMessage({
-                id: 'userprofile.basic.username',
-              })}
-            >
-              <Input />
-            </Form.Item>
+            <Form.Item
+                name="username"
+                label={formatMessage({
+                  id: 'userprofile.basic.username',
+                })}
+              >
+                <Input />
+              </Form.Item>
 
             <Form.Item
               name="first_name"
@@ -177,6 +184,6 @@ class BaseView extends Component {
   }
 }
 
-export default connect(({ userProfile }) => ({
-  currentUser: userProfile.currentUser,
+export default connect(({ user }) => ({
+  currentUser: user.currentUser,
 }))(BaseView);

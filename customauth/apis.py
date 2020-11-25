@@ -131,5 +131,28 @@ class CurrentUserView(APIView):
                 'detail': 'token可能已过期，或还未登录'
             }, status=403)
 
+    def patch(self, request, format=None):
+        user = request.user
+        if user and not isinstance(user, AnonymousUser):
+            # print(request.data)
+            serializer = UserModelSerializer(user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                content = {
+                    'status': 'ok',
+                    'data': serializer.data,
+                }
+            else:
+                content = {
+                    'status': 'err',
+                    'detail': '验证失败',
+                }
+            return JsonResponse(content)
+        else:
+            return JsonResponse({
+                'status': 'err',
+                'detail': 'token可能已过期，或还未登录'
+            }, status=403)
+
 
 current_uesr_view = CurrentUserView.as_view()
