@@ -36,10 +36,11 @@ class AvatarDropdown extends React.Component {
 
   render() {
     const {
-      currentUser = {
-        avatar: '',
-        name: '',
-      },
+      // currentUser = {
+      //   avatar: '',
+      //   display_name: '',
+      // },
+      currentUser,
       menu,
     } = this.props;
     const menuHeaderDropdown = (

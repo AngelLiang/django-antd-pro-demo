@@ -6,21 +6,8 @@ import BaseView from './components/base';
 
 class UserProfile extends Component {
 
-  // constructor(props) {
-  //   super(props);
-  // }
-
-  // componentDidMount() {
-  //   this.props.dispatch({
-  //     type: 'userProfile/fetchCurrentUser',
-  //   });
-  //   // window.addEventListener('resize', this.resize);
-  //   // this.resize();
-  // }
-
   render() {
     console.log(this.props)
-    // console.log(this.state)
 
     return (
       <GridContent>

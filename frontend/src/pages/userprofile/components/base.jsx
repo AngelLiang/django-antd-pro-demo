@@ -30,19 +30,6 @@ const AvatarView = ({ avatar }) => (
   </>
 );
 
-const validatorGeographic = (_, value, callback) => {
-  const { province, city } = value;
-
-  if (!province.key) {
-    callback('Please input your province!');
-  }
-
-  if (!city.key) {
-    callback('Please input your city!');
-  }
-
-  callback();
-};
 
 const validatorPhone = (rule, value, callback) => {
   const values = value.split('-');
@@ -81,8 +68,9 @@ class BaseView extends Component {
   };
   handleFinish = (values) => {
     console.log(values)
-    this.props.dispatch({
-      type: 'userProfile/updateCurrentUser',
+    const { dispatch } = this.props
+    dispatch({
+      type: 'user/updateCurrentUser',
       payload: values,
     })
     message.success(
